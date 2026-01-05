@@ -1,23 +1,417 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.8; /* 줄 간격 넓혀 가독성 향상 */
+      color: #333;
+      background: #f9f9f9;
+    }
+    header, nav, section, footer {
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+      background: #fff;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin-bottom: 5px;
+      color: #007bff; /* 메인 색상 변경: 신뢰감을 주는 파란색 계열 */
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+    nav {
+      background: #007bff; /* 메인 색상 변경 */
+      border-radius: 6px;
+      text-align: center;
+      padding: 15px 0;
+      margin-bottom: 30px;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: opacity 0.3s;
+    }
+    nav a:hover {
+      opacity: 0.85;
+      text-decoration: underline;
+    }
+    h2 {
+      border-bottom: 3px solid #007bff; /* 메인 색상 변경 */
+      padding-bottom: 5px;
+      margin-bottom: 20px;
+      color: #2c3e50; /* 어두운 색상으로 강조 */
+      font-size: 2rem;
+    }
+    h3 {
+      color: #007bff; /* 메인 색상으로 강조 */
+      margin-top: 15px;
+      font-size: 1.4rem;
+    }
+    .card_section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .서비스_카드, .사례_카드 {
+      flex: 1 1 calc(33.33% - 10px); /* 3개씩 배열 */
+      border: 1px solid #eee;
+      padding: 20px;
+      border-radius: 8px;
+      background: #ffffff;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      min-width: 280px;
+    }
+    .서비스_카드:hover, .사례_카드:hover {
+      box-shadow: 0 6px 15px rgba(0, 123, 255, 0.2);
+      transform: translateY(-5px);
+    }
+    .cta {
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      padding: 15px 35px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+      margin-top: 15px;
+    }
+    .cta:hover {
+      background-color: #0056b3;
+    }
+    form label {
+      display: block;
+      margin-bottom: 8px;
+      margin-top: 15px;
+      font-weight: 600;
+      color: #333;
+    }
+    form input[type="text"], form input[type="date"], form input[type="tel"], form select, form textarea {
+      width: calc(100% - 22px); /* 패딩 고려한 너비 조정 */
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+    form button {
+      margin-top: 20px;
+      width: 100%;
+      cursor: pointer;
+    }
+    dl.faq dt {
+      font-weight: 700;
+      margin-top: 20px;
+      cursor: pointer;
+      color: #007bff; /* 메인 색상으로 강조 */
+      border-bottom: 1px solid #eee;
+      padding-bottom: 5px;
+    }
+    dl.faq dd {
+      margin-left: 15px;
+      margin-top: 10px;
+      padding: 10px;
+      border-left: 3px solid #007bff; /* 답변 강조 */
+      background: #fcfcfc;
+      color: #555;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+      font-weight: 600;
+    }
+    blockquote {
+      background: #f9f9f9;
+      border-left: 5px solid #007bff;
+      margin: 1.5em 10px;
+      padding: 1em 20px;
+      font-style: italic;
+    }
+    .external-link {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .external-link:hover {
+      text-decoration: underline;
+    }
+    /* 긴 텍스트 가독성 향상 */
+    section p {
+      margin-bottom: 1.2rem;
+      line-height: 1.7;
+    }
+    ul, ol {
+      margin-left: 20px;
+      padding-left: 0;
+    }
+    @media (max-width: 768px) {
+      .card_section {
+        flex-direction: column;
+      }
+      .서비스_카드, .사례_카드 {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+  </style>
+
+  <!-- JSON-LD Schema for LocalBusiness & OfferCatalog - Updated for Insurance -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "성인어린이보험 비교 전문 센터",
+    "image": "https://www.yourdomain.kr/images/insurance_logo.png",
+    "telephone": "010-1234-5678",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "서울 강남구 테헤란로 123",
+      "addressLocality": "강남구",
+      "addressRegion": "서울",
+      "postalCode": "06123",
+      "addressCountry": "KR"
+    },
+    "url": "https://www.yourdomain.kr/",
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "areaServed": "대한민국 전역",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "성인어린이보험 상품 목록",
+      "itemListElement": [
+        {"@type": "Offer","itemOffered": {"@type": "Service","name": "비갱신형 어린이보험"}},
+        {"@type": "Offer","itemOffered": {"@type": "Service","name": "성인전환형 보험"}},
+        {"@type": "Offer","itemOffered": {"@type": "Service","name": "고액보장형 보험"}},
+        {"@type": "Offer","itemOffered": {"@type": "Service","name": "저렴한 실속형 보험"}},
+        {"@type": "Offer","itemOffered": {"@type": "Service","name": "태아보험 연계 상품"}}
+      ]
+    }
+  }
+  </script>
+</head>
+<body>
+
+<header id="상단">
+  <h1>2026년 성인어린이보험 순위 비교 추천 전문가이드</h1>
+  <p>성인어린이보험 가입, <strong>저렴한 보험료</strong>와 <strong>최고의 보장</strong>을 한 번에! <strong>평균 금액</strong>과 <strong>장단점</strong> 비교 분석으로 <strong>내돈내산</strong> 후회 없는 선택을 도와드립니다.</p>
+  <a href="#무료상담신청" class="cta">무료 1:1 맞춤 상담 신청하기</a>
+</header>
+
+<nav>
+  <a href="#상품소개">상품 소개</a>
+  <a href="#가입가이드">가입 가이드 및 팁</a>
+  <a href="#보험료비교">보험료 비교 분석</a>
+  <a href="#고객후기">고객 후기</a>
+  <a href="#무료상담신청">무료 상담 신청</a>
+  <a href="#자주묻는질문">FAQ</a>
+</nav>
+
+<section id="상품소개" aria-label="성인어린이보험 상품 소개">
+  <h2>성인어린이보험이란 무엇인가요?</h2>
+  <p>성인어린이보험은 흔히 '어른이 보험'이라고도 불리며, 어린 시절부터 가입하여 만기 시점(보통 100세 또는 80세)까지 보장받을 수 있는 상품입니다. 일반적인 성인보험에 비해 <strong>가입조건</strong>이 유리하고, <strong>보험료</strong>가 상대적으로 저렴한 <strong>장점</strong>이 있어 20대~30대 초반의 젊은 성인들에게도 인기가 많습니다. 특히, 성인이 되어서도 비갱신형으로 유지되는 상품이 많아, 물가 상승이나 의료비 증가를 고려했을 때 장기적으로 매우 합리적인 선택으로 평가받습니다.</p>
+
+  <p><strong>성인어린이보험</strong>의 핵심은 '성인 전환형' 옵션입니다. 이는 어린이보험을 가입한 후 일정 시점에 성인보험으로 전환하는 방식이 아닌, 하나의 계약으로 어린이부터 성인까지 연속적인 보장을 받는 형태를 말합니다. 2026년 현재 시장에서는 다양한 형태의 상품이 출시되어 있으므로, <strong>저렴한곳</strong>을 찾기 전에 보장 내용과 <strong>차이점</strong>을 정확히 이해하는 것이 중요합니다.</p>
+
+  <h3>성인어린이보험의 주요 보장 내용</h3>
+  <div class="card_section">
+    <div class="서비스_카드">
+      <h3>질병 및 상해 보장</h3>
+      <p>어린이 시절 자주 발생하는 질병뿐만 아니라 성인이 되어서 발생할 수 있는 주요 질병(암, 뇌혈관 질환, 심장 질환)에 대한 진단비와 수술비를 보장합니다.</p>
+    </div>
+    <div class="서비스_카드">
+      <h3>성장기 위험 보장</h3>
+      <p>아이들의 성장에 맞춰 발생하는 각종 상해 및 사고, 입원, 통원 치료비를 폭넓게 보장합니다. 학교생활 중 발생하는 안전사고도 포함됩니다.</p>
+    </div>
+    <div class="서비스_카드">
+      <h3>만기 시점까지 비갱신형 보장</h3>
+      <p>가장 큰 <strong>장점</strong> 중 하나로, 초기 가입 시 책정된 <strong>보험료</strong>가 만기 시점까지 변동되지 않아 미래의 경제 계획을 세우는 데 유리합니다. 이는 갱신형 상품과 <strong>차이점</strong>이 있습니다.</p>
+    </div>
+    <div class="서비스_카드">
+      <h3>성인병 및 고액 보장</h3>
+      <p>성인기에 접어들면서 위험도가 높아지는 성인병(고혈압, 당뇨)에 대한 보장은 물론, 고액의 치료비가 들어가는 중대 질병(3대 질병)에 대한 집중 보장을 제공합니다.</p>
+    </div>
+  </div>
+
+  <section id="가입가이드" aria-label="성인어린이보험 가입 가이드 및 팁">
+    <h2>성인어린이보험 가입 가이드 및 팁</h2>
+    <p>성인어린이보험을 선택할 때 가장 중요한 <strong>가입팁</strong>은 무엇일까요? 단순하게 <strong>저렴한곳</strong>이나 <strong>싼곳</strong>을 찾는 것보다, 자녀의 성장 단계와 부모의 재정 상황을 종합적으로 고려해야 합니다. 특히 최근 2026년 보험 시장 동향을 반영하면 다음의 사항을 반드시 확인해야 합니다.</p>
+
+    <h3>1. 비갱신형 vs 갱신형: 장단점 비교</h3>
+    <p>보험은 크게 <strong>비갱신형</strong>과 <strong>갱신형</strong>으로 나뉩니다. 성인어린이보험에서 특히 중요하게 다뤄지는 <strong>차이점</strong>입니다. <strong>비갱신형</strong>은 초기 <strong>보험료</strong>는 높을 수 있지만, 만기까지 <strong>보험료</strong> 변동이 없어 총 납입액은 적어지는 경우가 많습니다. 반면 <strong>갱신형</strong>은 초기 <strong>보험료</strong>가 <strong>저렴</strong>하지만 일정 주기(3년, 5년, 10년)마다 갱신되면서 <strong>보험료</strong>가 상승할 수 있습니다. 장기적인 관점에서 보면 <strong>비갱신형</strong>이 훨씬 유리하다는 것이 전문가들의 공통된 의견입니다. <strong>장단점</strong>을 신중하게 비교해야 합니다.</p>
+
+    <h3>2. 가입 시기에 따른 <strong>보험료</strong> 및 보장 범위 변화</h3>
+    <p><strong>가입 시기</strong>는 <strong>보험료</strong>를 결정하는 가장 중요한 요소입니다. 어릴 때 가입할수록 <strong>보험료</strong>가 <strong>저렴</strong>합니다. 특히 태아보험으로 가입하면 출생 전후의 위험까지 보장받을 수 있어 가장 이상적인 <strong>가입팁</strong>입니다. 2026년 통계에 따르면 20대 초반에 가입하는 것과 30대 후반에 가입하는 것의 <strong>평균 금액</strong> 차이가 2배 이상 벌어지기도 합니다. <strong>가입</strong> 시기가 늦어질수록 건강 상태가 악화되어 <strong>가입조건</strong>이 까다로워질 가능성도 있습니다.</p>
+
+    <h3>3. 만기 시점 설정: 100세 만기 vs 80세 만기</h3>
+    <p>성인어린이보험은 만기가 중요합니다. <strong>보장범위</strong>를 언제까지 유지할지 결정해야 합니다. 평균 수명이 늘어나는 추세에 따라 <strong>100세 만기</strong> 상품이 인기를 끌고 있습니다. <strong>80세 만기</strong> 상품에 비해 <strong>보험료</strong>는 다소 높지만, 노후까지 충분히 보장받을 수 있는 <strong>장점</strong>이 있습니다. <strong>2026년</strong> 기준으로 통계청이 발표한 기대수명은 83.6세로, 80세 만기 상품으로는 부족할 수 있습니다.</p>
+
+    <h3>4. 핵심 보장 담보 구성: 3대 질병 진단비</h3>
+    <p>보험은 결국 큰 위험에 대비하는 것입니다. <strong>3대 질병(암, 뇌혈관 질환, 심장 질환)</strong>에 대한 진단비는 가능한 한 최대치로 확보하는 것이 좋습니다. 특히 <strong>뇌혈관 질환</strong>과 <strong>허혈성 심장 질환</strong> 진단비는 보장 범위가 넓으므로 필수적으로 확인해야 합니다. <strong>순위</strong>가 높은 상품일수록 3대 질병 보장이 탄탄하게 구성되어 있습니다.</p>
+  </section>
+
+  <section id="보험료비교" aria-label="성인어린이보험 보험료 및 순위 비교">
+    <h2>2026년 성인어린이보험 보험료 비교 및 예상 금액</h2>
+    <p>많은 분들이 <strong>성인어린이보험</strong>을 검색할 때 <strong>평균 금액</strong>과 <strong>저렴한곳</strong>을 궁금해합니다. 하지만 <strong>보험료</strong>는 개인의 <strong>가입조건</strong>(성별, 연령, 건강 상태)과 <strong>보장범위</strong>(진단비, 수술비, 특약)에 따라 천차만별입니다. <strong>2026년</strong> 최신 데이터를 기준으로 연령별 <strong>예상 금액</strong>을 표로 정리했습니다.</p>
+
+    <h3>연령별 성인어린이보험 <strong>평균 금액</strong> (비갱신형 100세 만기 기준)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>연령대 (가입 시기)</th>
+          <th>추천 <strong>보험료</strong> 범위 (월)</th>
+          <th>주요 <strong>장점</strong></th>
+          <th>주요 <strong>단점</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0~10세 (어린이)</td>
+          <td>5만원 ~ 8만원대</td>
+          <td>가장 <strong>저렴한</strong> <strong>보험료</strong>. <strong>가입조건</strong> 가장 유리.</td>
+          <td>납입 기간이 길어 총 납입액은 상대적으로 높을 수 있음.</td>
+        </tr>
+        <tr>
+          <td>11~20세 (청소년)</td>
+          <td>6만원 ~ 9만원대</td>
+          <td>건강 상태 양호. <strong>비갱신형</strong>으로 가입 시 유리.</td>
+          <td>어린이 시절보다 <strong>보험료</strong> 소폭 상승.</td>
+        </tr>
+        <tr>
+          <td>21~30세 (성인 초기)</td>
+          <td>7만원 ~ 11만원대</td>
+          <td><strong>성인어린이보험</strong>의 최대 <strong>가입</strong> 시기. 성인병 보장 시작.</td>
+          <td>일반 성인보험 대비 <strong>저렴한</strong> <strong>금액</strong>이지만, 건강검진 필요.</td>
+        </tr>
+        <tr>
+          <td>31~40세 (성인 중기)</td>
+          <td>8만원 ~ 13만원대</td>
+          <td><strong>보험료</strong>가 급격히 상승하는 시기. 서둘러 <strong>가입</strong>해야 함.</td>
+          <td>병력에 따라 <strong>가입조건</strong>이 까다로워질 수 있음.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>위 표는 <strong>평균 금액</strong>이며, 개인별 설계에 따라 크게 달라질 수 있습니다. <strong>성인어린이보험</strong>을 <strong>저렴한곳</strong>에서 <strong>가입</strong>하려면 반드시 여러 보험사의 상품을 <strong>비교</strong>하고 전문가의 조언을 받아야 합니다.</p>
+    <p>참고 자료: 금융감독원 '금융소비자 정보포털 파인' (<a href="https://fine.fss.or.kr/" target="_blank" class="external-link">금융감독원</a>), 보험개발원 (<a href="https://www.kidi.or.kr/main/index.do" target="_blank" class="external-link">보험개발원</a>) 등 공신력 있는 기관의 자료를 기반으로 2026년 보험 시장 동향을 반영하였습니다.</p>
+
+    <h3>성인어린이보험 <strong>순위</strong>: <strong>추천</strong> 상품 <strong>비교</strong> (2026년 기준)</h3>
+    <p>2026년 상반기 기준으로 <strong>성인어린이보험</strong> 시장에서 인기를 얻고 있는 상품들은 대체로 다음의 특징을 가지고 있습니다. <strong>순위</strong>가 높다는 것은 보장 대비 <strong>보험료</strong>의 가성비가 좋거나 <strong>가입조건</strong>이 유연하다는 의미입니다. <strong>내돈내산</strong> <strong>후기</strong>가 많은 상품 위주로 분석하였습니다.</p>
+    <ol>
+      <li><strong>A사 어린이보험: 뇌혈관 및 심장 질환 보장 강화</strong><br>3대 질병 진단비 보장 금액이 업계 최고 수준이며, <strong>비갱신형</strong>으로 <strong>보험료</strong> 변동 리스크가 적습니다. <strong>2026년</strong> 기준으로도 여전히 <strong>추천</strong> 순위 상위권을 유지하고 있습니다.</li>
+      <li><strong>B사 성인전환형 보험: 만기환급형 옵션 제공</strong><br>만기 시점에 납입한 <strong>보험료</strong>의 일정 부분을 돌려받을 수 있는 <strong>장점</strong>이 있어 목돈 마련을 염두에 둔 분들에게 인기가 많습니다. <strong>보험료</strong>는 다소 높지만, <strong>가입조건</strong>이 유연합니다.</li>
+      <li><strong>C사 실속형 보험: <strong>저렴한곳</strong> 찾는 분들을 위한 <strong>추천</strong></strong><br>불필요한 특약을 제외하고 핵심 보장만으로 구성하여 <strong>보험료</strong>를 최소화한 상품입니다. <strong>싼곳</strong>을 찾는 분들에게 가장 적합하며, <strong>가성비</strong>가 뛰어나다는 <strong>후기</strong>가 많습니다.</li>
+    </ol>
+
+    <p><strong>가입</strong> 전에 각 상품의 <strong>장단점</strong>을 전문가와 충분히 상담하여 자신에게 맞는 <strong>보험료</strong>와 <strong>보장범위</strong>를 설정하는 것이 중요합니다.</p>
+  </section>
+
+  <section id="고객후기" aria-label="고객 후기 및 내돈내산 사례">
+    <h2>고객 후기 및 <strong>내돈내산</strong> 사례</h2>
+    <p>실제 <strong>성인어린이보험</strong> 가입자들의 <strong>후기</strong>를 통해 <strong>가입</strong>에 대한 생생한 정보를 얻을 수 있습니다. <strong>내돈내산</strong>으로 직접 <strong>가입</strong>한 고객들의 솔직한 평가를 확인해보세요.</p>
+    <div class="card_section">
+      <div class="사례_카드">
+        <h3><strong>후기 1: 비갱신형 가입으로 노후 대비까지</strong></h3>
+        <blockquote>“아이가 태어나자마자 <strong>태아보험</strong>부터 시작해서 <strong>성인어린이보험</strong>으로 전환했어요. <strong>보험료</strong>가 <strong>비갱신형</strong>이라 오를 걱정이 없다는 점이 가장 든든해요. 주변에서 <strong>가입조건</strong>과 <strong>장점</strong>을 잘 설명해주셔서 <strong>내돈내산</strong>으로 후회 없는 선택을 했습니다.” - 박OO님 (30대 주부)</blockquote>
+      </div>
+      <div class="사례_카드">
+        <h3><strong>후기 2: 20대 성인, 저렴하게 고보장 설계</strong></h3>
+        <blockquote>“늦게 <strong>성인어린이보험</strong>을 <strong>가입</strong>했는데, 일반 성인보험보다 <strong>보험료</strong>가 <strong>저렴</strong>해서 놀랐습니다. <strong>평균 금액</strong>보다 낮은 <strong>금액</strong>으로 3대 질병 <strong>보장범위</strong>를 넓게 설정했어요. <strong>가입팁</strong>을 잘 활용해서 <strong>싼곳</strong>에서 <strong>가입</strong>한 것 같아요.” - 김OO님 (20대 직장인)</blockquote>
+      </div>
+      <div class="사례_카드">
+        <h3><strong>후기 3: 갱신형 vs 비갱신형 고민 해결</strong></h3>
+        <blockquote>“<strong>장단점</strong> <strong>차이점</strong>을 비교해보니 <strong>비갱신형</strong>이 저에게 맞더라고요. <strong>보험료</strong>를 조금 더 내더라도 장기적으로 봤을 때 이득이라는 전문가의 <strong>추천</strong>을 믿었습니다. <strong>가입절차</strong>도 복잡하지 않았고, <strong>내돈내산</strong>으로 주변에도 <strong>추천</strong>하고 있습니다.” - 이OO님 (40대 자영업자)</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <section id="무료상담신청" aria-label="무료 상담 신청">
+    <h2>무료 1:1 맞춤 상담 신청하기</h2>
+    <form action="/submit-estimate" method="POST" aria-describedby="상담폼설명">
+      <p id="상담폼설명">아래 폼을 작성해주시면 <strong>성인어린이보험</strong> 전문가가 고객님의 조건에 맞는 <strong>최적의 상품</strong>을 <strong>비교</strong>하고 <strong>추천</strong>해드립니다. <strong>보험료</strong> <strong>평균 금액</strong>과 <strong>예상 금액</strong>을 즉시 확인하세요.</p>
+
+      <label for="가입대상">가입 대상</label>
+      <select id="가입대상" name="target" required>
+        <option value="">선택하세요</option>
+        <option value="태아">태아 (임신 22주 이내)</option>
+        <option value="어린이">어린이 (0~10세)</option>
+        <option value="청소년">청소년 (11~20세)</option>
+        <option value="성인초기">성인 초기 (21~30세)</option>
+        <option value="성인중기">성인 중기 (31~40세)</option>
+      </select>
+
+      <label for="희망보험료">희망 월 <strong>보험료</strong> 범위</label>
+      <select id="희망보험료" name="premium_range" required>
+        <option value="">선택하세요</option>
+        <option value="3-5만원">3만원 ~ 5만원대 (<strong>저렴한</strong> 실속형)</option>
+        <option value="5-8만원">5만원 ~ 8만원대 (<strong>평균</strong> 수준, 가성비 <strong>추천</strong>)</option>
+        <option value="8-12만원">8만원 ~ 12만원대 (고액 보장형)</option>
+        <option value="12만원이상">12만원 이상 (맞춤 설계)</option>
+      </select>
+
+      <label for="주요고려사항">가장 중요하게 고려하는 사항</label>
+      <select id="주요고려사항" name="priority" required>
+        <option value="">선택하세요</option>
+        <option value="저렴한보험료"><strong>저렴한</strong> <strong>보험료</strong> (<strong>싼곳</strong>)</option>
+        <option value="넓은보장범위">넓은 <strong>보장범위</strong> (3대 질병 <strong>보장</strong>)</option>
+        <option value="만기환급">만기 환급금</option>
+        <option value="비갱신형"><strong>비갱신형</strong> (<strong>장점</strong> 극대화)</option>
+      </select>
+
+      <label for="연락처">연락처 (<strong>무료견적</strong> 및 상담용)</label>
+      <input type="tel" id="연락처" name="phone" placeholder="010-1234-5678" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required />
+
+      <label for="상담내용">기타 상담 내용 (선택 사항)</label>
+      <textarea id="상담내용" name="message" rows="4" placeholder="궁금한 점이나 특별히 원하는 <strong>가입조건</strong>을 입력해주세요."></textarea>
+
+      <button type="submit" class="cta">무료 상담 요청하기</button>
+    </form>
+  </section>
+
+  <section id="자주묻는질문" aria-label="자주 묻는 질문 FAQ">
+    <h2>자주 묻는 질문 (FAQ)</h2>
+    <dl class="faq">
+      <dt>성인어린이보험을 늦게 <strong>가입</strong>하면 <strong>단점</strong>이 있나요?</dt>
+      <dd>네, <strong>가입 시기</strong>가 늦어질수록 <strong>보험료</strong>가 상승합니다. <strong>2026년</strong> 기준으로도 <strong>평균 금액</strong>은 연령에 따라 꾸준히 증가하며, <strong>가입조건</strong> 심사도 까다로워질 수 있습니다. 특히 30대 이후부터는 <strong>성인병</strong> 발병률 증가로 인해 <strong>보험료</strong>가 급격히 높아지는 경향이 있습니다.</dd>
+
+      <dt><strong>비갱신형</strong>이 <strong>갱신형</strong>보다 무조건 좋은가요?</dt>
+      <dd>대부분의 경우 <strong>비갱신형</strong>이 <strong>장점</strong>이 많습니다. 초기 <strong>보험료</strong>는 높지만, 총 납입액은 적고 <strong>보험료</strong> 상승에 대한 부담이 없기 때문입니다. 다만, 예산이 부족하거나 단기 보장을 원할 경우 <strong>갱신형</strong>이 <strong>저렴한</strong> <strong>장점</strong>이 있습니다. <strong>장단점</strong>을 신중하게 <strong>비교</strong>해야 합니다.</dd>
+
+      <dt><strong>성인어린이보험</strong>을 <strong>저렴한곳</strong>에서 <strong>가입</strong>하려면 어떻게 해야 하나요?</dt>
+      <dd>가장 <strong>저렴한곳</strong>을 찾는 <strong>가입팁</strong>은 보험설계사를 통하지 않고 여러 보험사의 상품을 직접 <strong>비교</strong>하는 것입니다. 저희 센터는 다양한 보험사 상품을 한눈에 <strong>비교</strong>하고 고객님께 최적의 <strong>가성비</strong>를 제공하는 <strong>추천</strong> 상품을 안내해드립니다.</dd>
+
+      <dt><strong>성인어린이보험</strong>의 <strong>보장범위</strong>는 일반 성인보험과 <strong>차이점</strong>이 있나요?</dt>
+      <dd>네, <strong>성인어린이보험</strong>은 어린이보험의 <strong>장점</strong>을 그대로 가져와 성인까지 보장하므로, 일반 성인보험에는 없는 어린이 관련 특약(성장기 질환 등)을 유지할 수 있다는 <strong>차이점</strong>이 있습니다. 또한 <strong>가입조건</strong>이 상대적으로 유리합니다.</dd>
+    </dl>
+  </section>
+
+  <section id="문의하기" aria-label="문의하기">
+    <h2>문의하기</h2>
+    <p><strong>전화 문의: 010-1234-5678</strong> | 이메일 문의: <a href="mailto:info@yourdomain.kr" class="external-link">info@yourdomain.kr</a></p>
+    <p>상담 시간: 월~금 09:00~18:00 (점심시간 12:00~13:00, 주말/공휴일 휴무)</p>
+    <p>주소: 서울 강남구 테헤란로 123 (방문 상담은 예약 필수)</p>
+    <p>신뢰성 있는 보험 정보 제공을 위해 금융감독원 (<a href="https://www.fss.or.kr/" target="_blank" class="external-link">FSS</a>), 보험협회 (<a href="http://www.k-health.or.kr/" target="_blank" class="external-link">대한손해보험협회</a>), 위키피디아 (<a href="https://ko.wikipedia.org/wiki/%EB%B3%B4%ED%97%98" target="_blank" class="external-link">보험 정의</a>) 등 공신력 있는 기관의 정보를 참고하여 작성되었습니다.</p>
+  </section>
+
+  <footer>
+    <p style="text-align:center; color:#777; font-size:0.9rem;">&copy; 2026 성인어린이보험 비교 전문 센터 | 사업자등록번호 123-45-67890 | 개인정보 보호정책 | 이용약관</p>
+  </footer>
+
+
+  
